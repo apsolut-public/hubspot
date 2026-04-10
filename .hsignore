@@ -1,0 +1,62 @@
+# -----------------------------------------------------------------------------
+# .hsignore — tells the HubSpot CLI (`hs upload`) which files to skip.
+#
+# Pattern syntax matches .gitignore. Paths are relative to the folder you
+# pass as the `hs upload <src>` argument. This file is only consulted
+# when you upload a folder that *contains* these paths, so when you run
+# `hs upload modules/foo/foo.module <remote>` none of this matters —
+# but if you ever do `hs upload . <remote>` or `hs upload modules <remote>`
+# these rules keep docs and screenshots out of your portal.
+# -----------------------------------------------------------------------------
+
+# Git, editor, OS noise
+.git
+.gitignore
+.hsignore
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+
+# Claude Code / AI assistant artifacts
+.claude
+CLAUDE.md
+CLAUDE.local.md
+.claude.json
+.claude-code
+
+# Local workspace scratch folder
+.apsolut
+
+# Node / tooling (only if added later)
+node_modules
+package.json
+package-lock.json
+.env
+.env.local
+
+# Repo-level documentation — never belongs in a HubSpot portal
+README.md
+CONTRIBUTING.md
+LICENSE
+docs
+
+# Per-entry documentation — keep on GitHub, not on the portal.
+# Wrapper folders carry these; the .module bundles themselves stay clean.
+**/README.md
+**/screenshots
+
+# Non-module categories — meant to be copy-pasted into Design Manager,
+# not bulk-uploaded as HubSpot modules.
+macros
+partials
+snippets
+
+# HubSpot CLI local artifacts (should never be committed either, but
+# belt-and-suspenders in case someone runs `hs upload .`)
+hubspot.config.yml
+hubspot.config.yaml
+.hs-cache

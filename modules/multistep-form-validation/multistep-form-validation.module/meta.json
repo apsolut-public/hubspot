@@ -1,0 +1,12 @@
+{
+  "label": "Multi-step Form Validation",
+  "css_assets": [],
+  "external_js": [],
+  "global": false,
+  "is_available_for_new_content": true,
+  "js_assets": [],
+  "other_assets": [],
+  "smart_type": "NOT_SMART",
+  "tags": ["form", "validation"],
+  "host_template_types": ["PAGE", "LANDING_PAGE"]
+}
