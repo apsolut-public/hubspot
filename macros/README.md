@@ -34,15 +34,18 @@ page editor**.
 ## Folder structure
 
 ```
-macros/<name>/
-├── README.md
-├── screenshots/
-│   └── preview.png
-└── <name>.html
+macros/
+├── <name>.md              ← GitHub docs for this macro
+└── <name>.html            ← the macro definition(s)
+
+screenshots/
+└── <name>/
+    └── preview.png        ← referenced from <name>.md
 ```
 
-The single `.html` file contains one or more macro definitions. The
-README documents each macro's arguments, defaults, and an example call.
+The `.html` file contains one or more macro definitions. The sibling
+`.md` file documents each macro's arguments, defaults, and an example
+call.
 
 ## How to use a macro from this repo
 

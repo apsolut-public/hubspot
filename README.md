@@ -1,4 +1,4 @@
-# hubspot-snippets
+# Hubspot Snippets
 
 A curated, browseable collection of sharable HubSpot HubL code —
 modules, macros, partials, and snippets — that you can drop into any

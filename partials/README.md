@@ -42,11 +42,13 @@ configure it from the page editor.
 ## Folder structure
 
 ```
-partials/<name>/
-├── README.md
-├── screenshots/
-│   └── preview.png
-└── <name>.html
+partials/
+├── <name>.md              ← GitHub docs for this partial
+└── <name>.html            ← the partial template
+
+screenshots/
+└── <name>/
+    └── preview.png        ← referenced from <name>.md
 ```
 
 ## How to use

@@ -45,9 +45,15 @@ LICENSE
 docs
 
 # Per-entry documentation — keep on GitHub, not on the portal.
-# Wrapper folders carry these; the .module bundles themselves stay clean.
+# - Modules have README.md INSIDE their .module folder.
+# - Macros / partials / snippets have sibling <name>.md files.
+# - Screenshots for every entry live in /screenshots/ at the repo root.
 **/README.md
 **/screenshots
+screenshots
+macros/*.md
+partials/*.md
+snippets/*.md
 
 # Non-module categories — meant to be copy-pasted into Design Manager,
 # not bulk-uploaded as HubSpot modules.

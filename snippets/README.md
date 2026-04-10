@@ -23,15 +23,14 @@ Reference: https://developers.hubspot.com/docs/cms/hubl
 ## Folder structure
 
 ```
-snippets/<name>/
-├── README.md
-├── screenshots/
-│   └── preview.png
-└── snippet.html
-```
+snippets/
+├── <name>.md              ← GitHub docs for this snippet
+└── <name>.html            ← the HubL code to copy-paste
 
-Note the canonical filename: **`snippet.html`** (singular, lowercase).
-This keeps every snippet entry pointing at a predictable path.
+screenshots/
+└── <name>/
+    └── preview.png        ← referenced from <name>.md
+```
 
 ## How to use
 

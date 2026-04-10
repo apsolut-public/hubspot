@@ -1,17 +1,28 @@
 <!--
-  Per-entry README template for hubspot-snippets.
+  Per-entry documentation template for hubspot-snippets.
 
   HOW TO USE:
-  1. Copy this file into your new entry folder as `README.md`
-     (e.g. modules/my-hero-banner/README.md).
-  2. Fill in every section. Delete sections that genuinely do not apply
+  1. Copy this file to your entry:
+       - Modules:  modules/<name>.module/README.md        (INSIDE the .module folder)
+       - Macros:   macros/<name>.md                       (sibling next to <name>.html)
+       - Partials: partials/<name>.md                     (sibling next to <name>.html)
+       - Snippets: snippets/<name>.md                     (sibling next to <name>.html)
+
+  2. Put your screenshots in /screenshots/<name>/ at the repo root.
+
+  3. Adjust the preview image path depending on where your README lives:
+       - modules/<name>.module/README.md → ../../screenshots/<name>/preview.png
+       - macros / partials / snippets    → ../screenshots/<name>/preview.png
+
+  4. Fill in every section. Delete sections that genuinely do not apply
      (e.g. "Fields / Inputs" for a plain snippet).
-  3. Remove these HTML comment hints before committing.
+
+  5. Remove these HTML comment hints before committing.
 -->
 
 # <Entry title>
 
-<!-- Short, human-readable name. Match the folder name in Title Case. -->
+<!-- Short, human-readable name. Match the entry name in Title Case. -->
 
 ## Description
 
@@ -22,11 +33,13 @@
 
 ## Preview
 
-![Preview](./screenshots/preview.png)
+![Preview](../screenshots/<name>/preview.png)
 
 <!--
-  `preview.png` is the canonical hero image for the entry. It is what
-  GitHub shows on the README page and is referenced from category indexes.
+  Adjust the path to `../../screenshots/<name>/preview.png` if this
+  README lives inside a .module/ folder (modules).
+  `preview.png` is the canonical hero image, stored at
+  /screenshots/<name>/preview.png at the repo root.
 -->
 
 ## Category
@@ -49,13 +62,14 @@
   Per-category instructions. Pick the one that matches your entry and
   delete the others.
 
-  Modules (recommended, uses the HubSpot CLI):
-    hs upload modules/<name>/<name>.module <remote-path>/<name>.module
+  Modules (recommended, uses the HubSpot CLI — run from the repo root
+  so .hsignore is honored):
+    hs upload modules/<name>.module <remote-path>/<name>.module
 
   Modules (manual, no CLI):
     In Design Manager, create a new custom module and paste the contents
     of module.html / module.css / module.js / fields.json into the matching
-    panels.
+    panels. (Do NOT paste README.md — it's for GitHub only.)
 
   Macros:
     1. In Design Manager, create a new HTML file (e.g. `custom/macros/<name>.html`)
@@ -70,7 +84,7 @@
        {% include 'custom/partials/<name>.html' %}
 
   Snippets:
-    Copy `snippet.html` and paste the relevant block directly into an
+    Copy the `.html` file and paste the relevant block directly into an
     existing template. Adapt variable names as needed.
 -->
 
@@ -99,10 +113,11 @@
 ## Screenshots
 
 <!--
-  Optional additional images. Store them in `./screenshots/` alongside
-  `preview.png`. Reference them here with relative paths and captions.
+  Optional additional images. Store them in /screenshots/<name>/ at the
+  repo root alongside `preview.png`. Reference them with the same relative
+  path style as the Preview image above.
 
-  ![Editor view](./screenshots/01-editor.png)
+  ![Editor view](../screenshots/<name>/01-editor.png)
   *Module fields as they appear in the HubSpot page editor.*
 -->
 

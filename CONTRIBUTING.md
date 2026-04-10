@@ -51,17 +51,21 @@ When in doubt:
 
 ---
 
-## Folder naming rules
+## Naming rules
 
-- Use **lowercase-kebab-case**: `hero-banner`, `pricing-table`,
-  `format-publish-date`.
+- Use **lowercase-kebab-case** for entry names: `hero-banner`,
+  `pricing-table`, `format-publish-date`.
 - Names should be descriptive, not clever. `sticky-header` is good;
   `megathing` is not.
-- Do not prefix folders with category names (the parent folder already
+- Do not prefix names with category names (the parent folder already
   tells you the category).
-- For modules, the nested upload folder **must** end in `.module` — e.g.
-  `hero-banner.module`. HubSpot requires this extension; the CLI will
-  refuse to upload without it.
+- For modules, the bundle folder **must** be named `<name>.module` —
+  HubSpot requires the `.module` extension and the CLI will refuse to
+  upload without it.
+- Documentation files:
+  - Modules → `README.md` **inside** the `.module` folder.
+  - Macros / partials / snippets → sibling `<name>.md` next to the
+    entry's `.html` file.
 
 ---
 
@@ -70,66 +74,68 @@ When in doubt:
 ### Modules
 
 ```
-modules/<name>/
-├── README.md
-├── screenshots/
-│   └── preview.png
+modules/
 └── <name>.module/
+    ├── README.md          ← GitHub docs (kept out of upload by .hsignore)
     ├── module.html
-    ├── module.css
-    ├── module.js
     ├── fields.json
-    └── meta.json
+    ├── meta.json
+    ├── module.css         (optional)
+    └── module.js          (optional)
 ```
 
-The wrapper folder (`modules/<name>/`) keeps README and screenshots
-**outside** the uploadable `<name>.module` bundle, so `hs upload` does
-not push documentation into the portal.
+The `README.md` lives **inside** the `.module` folder next to the code.
+`hs upload` would normally push it to the portal, but the `.hsignore`
+at the repo root excludes `**/README.md` so only the runtime files ship.
 
-### Macros
-
-```
-macros/<name>/
-├── README.md
-├── screenshots/
-│   └── preview.png
-└── <name>.html
-```
-
-### Partials
+### Macros, partials, snippets
 
 ```
-partials/<name>/
-├── README.md
-├── screenshots/
-│   └── preview.png
-└── <name>.html
+<category>/
+├── <name>.md              ← sibling documentation (copy from docs/SNIPPET_TEMPLATE.md)
+└── <name>.html            ← the macro / partial / snippet code
 ```
 
-### Snippets
+Where `<category>` is `macros/`, `partials/`, or `snippets/`. These
+categories don't use folders per entry — the `.md` and `.html` sit
+flat inside the category folder.
+
+### Screenshots (all categories)
+
+Screenshots for every entry, regardless of category, live in a central
+`/screenshots/` folder at the repo root:
 
 ```
-snippets/<name>/
-├── README.md
-├── screenshots/
-│   └── preview.png
-└── snippet.html
+screenshots/
+└── <name>/
+    ├── preview.png        ← canonical hero image
+    └── 01-editor.png      (optional extras)
 ```
+
+Reference them from your documentation file with a relative path:
+
+- From `modules/<name>.module/README.md` → `../../screenshots/<name>/preview.png`
+- From `macros|partials|snippets/<name>.md` → `../screenshots/<name>/preview.png`
 
 ---
 
-## The per-entry README
+## The per-entry documentation file
 
-Every entry **must** have its own `README.md`. Start by copying
-[`docs/SNIPPET_TEMPLATE.md`](./docs/SNIPPET_TEMPLATE.md) into your
-entry's folder and filling it in. Do not write a README from scratch —
-the template exists so that entries stay consistent.
+Every entry **must** have its own documentation file. Start by copying
+[`docs/SNIPPET_TEMPLATE.md`](./docs/SNIPPET_TEMPLATE.md) to:
+
+- `modules/<name>.module/README.md` for modules, **or**
+- `<category>/<name>.md` for macros, partials, snippets.
+
+Do not write a doc from scratch — the template exists so that entries
+stay consistent.
 
 Required sections (these must be present and filled in):
 
 - **Title** (`# <Entry title>`)
 - **Description** — what the entry does and why it exists.
-- **Preview** — `![Preview](./screenshots/preview.png)`
+- **Preview** — `![Preview](<relative-path>/screenshots/<name>/preview.png)`
+  (`../../` from inside `.module/`, `../` from sibling `.md` files).
 - **Category** — modules / macros / partials / snippets.
 - **Requirements** — HubSpot subscription tier, HubDB tables, global
   partials, CDN assets, minimum CLI version for modules, compatible
@@ -152,19 +158,23 @@ Delete the HTML comment hints from the template before committing.
 
 ## Screenshots
 
-Every entry needs at least one screenshot so the README renders nicely
-on GitHub.
+Every entry needs at least one screenshot so the documentation renders
+nicely on GitHub.
 
-- **Location:** `<entry>/screenshots/`.
+- **Location:** `/screenshots/<name>/` at the repo root (NOT inside
+  category folders, NOT inside `.module/` bundles). One subfolder per
+  entry, even if the entry currently has only one image.
 - **Canonical filename:** `preview.png` — this is the hero image shown
-  at the top of the README.
+  at the top of the documentation file.
 - **Additional images:** prefix with a two-digit order, e.g.
   `01-editor.png`, `02-mobile.png`.
 - **Format:** PNG or JPG.
 - **Size:** keep the longest edge under ~1600 px and the file under
   ~500 KB. Large PNGs bloat the repo and slow GitHub rendering.
-- **Referencing:** always use relative Markdown paths
-  (`./screenshots/preview.png`), never absolute URLs.
+- **Referencing:** always use relative Markdown paths, never absolute
+  URLs:
+  - From `modules/<name>.module/README.md` → `../../screenshots/<name>/preview.png`
+  - From sibling `.md` files → `../screenshots/<name>/preview.png`
 - **Content:** do not include personal data, real customer information,
   portal IDs, or internal URLs. Blur or redact anything sensitive.
 
@@ -233,14 +243,19 @@ Design Manager.
 Before you open a PR, confirm all of the following:
 
 - [ ] The entry is in the correct top-level category folder.
-- [ ] Folder name is lowercase-kebab-case.
-- [ ] For modules, the inner folder ends in `.module` and the wrapper
-      folder holds the README + `screenshots/`.
-- [ ] `README.md` was copied from `docs/SNIPPET_TEMPLATE.md` and every
-      required section is filled in.
-- [ ] At least one screenshot exists at `screenshots/preview.png`.
+- [ ] Entry name is lowercase-kebab-case.
+- [ ] For modules, the bundle folder is named `<name>.module` and its
+      `README.md` is inside that folder.
+- [ ] For macros / partials / snippets, the sibling `.md` file sits
+      next to the `.html` file in the category folder.
+- [ ] The documentation file was copied from
+      `docs/SNIPPET_TEMPLATE.md` and every required section is filled
+      in (including the correct relative path to the preview image).
+- [ ] At least one screenshot exists at
+      `screenshots/<name>/preview.png`.
 - [ ] The entry has been uploaded to a real HubSpot portal and renders
-      without errors.
+      without errors. For modules, verify the upload ran from the repo
+      root so `.hsignore` excluded the README.
 - [ ] For modules: `meta.json` has `label`,
       `is_available_for_new_content`, `host_template_types`,
       `css_assets`, `js_assets`, and `smart_type`; `fields.json` is
